@@ -13,8 +13,8 @@ function book(title, author, pages, read) {
 
 const addBook = document.querySelector('.add-button')
 addBook.addEventListener('click', addBookToLibrary)
-
+const modalAdd = document.querySelector('data-modal-add')
 function addBookToLibrary() {
-    alert('i work!')
+    modalAdd.classList.remove("display-none")
     
 }

@@ -79,16 +79,30 @@
 
         </aside>
     </div>
-    <div class="modal-add">
-        <div class="content">
-            <h2>Add Book</h2>
-            <input type="text" placeholder="Title">
-            <input type="text" placeholder="Authors Name">
-            <input type="text" placeholder="Total Pages">
-            <input type="text" placeholder="Total Pages Read">
-            <input type="checkbox">
-        </div>
+    <div data-modal-add class="modal-add display-none">
         <div class="overlay"></div>
+        <div class="modal-add-content">
+            <div class="ma-header">
+                <h2>Add Book</h2>
+            </div>
+
+            <div class="ma-input">
+                <input type="text" placeholder="Title">
+                <input type="text" placeholder="Authors Name">
+                <input type="text" placeholder="Total Pages">
+                <input type="text" placeholder="Total Pages Read">
+                <div class="check">
+                    <h3>Book Completed</h3>
+                    <input type="checkbox">
+                </div>
+            </div>
+
+            <div class="ma-buttons">
+                <button class="btn-cancel">CANCEL</button>
+                <button class="btn-confirm">CONFIRM</button>
+            </div>
+            
+        </div>
     </div>
     <script src="/script.js"></script>
 </body>
