@@ -13,12 +13,8 @@
             <h1 class="title">Library</h1>
             <button class="sign-in">Sign In</button>
         </header>
-        <main>
-            <div class="add-button">
-            <span class="plus">+</span>
-            </div>
-
-            <div class="book-example">
+        <main id="BC">
+            <div class="book-template">
                 <div class="btn-options">
                     <button class="btn-book btn-edit">edit</button>
                     <button class="btn-book btn-remove">remove</button>
@@ -29,16 +25,19 @@
                 </div>
                 <div class="book-controller">
                     <button class="btn-minus">&minus;</button>
-                    <button class="btn-check">&checkmark;</button>
+                    <button class="btn-check">&check;</button>
                     <button class="btn-plus">&plus;</button> 
                 </div>
                 <div class="book-counter">
                     <h2 class="completed">50</h2>
                     <div class="line"></div>
                     <h2 class="total">250</h2>
-                </div>
-            
+                </div>            
             </div>
+
+            <div class="add-button">
+                <span class="plus">+</span>
+                </div>
         </main>
         <aside>
             <div class="info">
@@ -80,20 +79,20 @@
         </aside>
     </div>
     <div data-modal-add class="modal-add display-none">
-        <div class="overlay"></div>
+        <div class="modal-overlay"></div>
         <div class="modal-add-content">
             <div class="ma-header">
                 <h2>Add Book</h2>
             </div>
 
             <div class="ma-input">
-                <input type="text" placeholder="Title">
-                <input type="text" placeholder="Authors Name">
-                <input type="text" placeholder="Total Pages">
-                <input type="text" placeholder="Total Pages Read">
+                <input id="add-title" type="text" placeholder="Title" required>
+                <input id="add-author" type="text" placeholder="Authors Name" required>
+                <input id="add-pages" type="text" placeholder="Total Pages" required>
+                <input id="add-pages-read" type="text" placeholder="Total Pages Read" required>
                 <div class="check">
                     <h3>Book Completed</h3>
-                    <input type="checkbox">
+                    <input id="book-completedß" type="checkbox">
                 </div>
             </div>
 
@@ -104,6 +103,18 @@
             
         </div>
     </div>
+
+    <div class="modal-warning display-none">
+        <div class="modal-overlay"></div>
+        <div class="modal-warning-content">
+            <h2 class="warning-title">Do want to Delete this Book!</h2>        
+            <div class="warning-btn">
+                <button class="warning-confirm">Yes</button>
+                <button class="warning-cancel">NO</button>
+            </div>
+        </div>
+    </div>
+
     <script src="/script.js"></script>
 </body>
 </html>
