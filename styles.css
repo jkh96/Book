@@ -41,6 +41,7 @@ main {
     grid-area: main;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    row-gap: 70px;
     justify-content: space-around;
     justify-items: center;
     margin: 50px 50px;

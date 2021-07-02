@@ -1,10 +1,14 @@
 let myLibrary = []
+let bookId = -1
 
 function Book(title, author, pages, read) {
+    bookId++
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read
+    this.id = bookId
+
 }
 
 const grid = document.getElementById('BC')
@@ -60,11 +64,22 @@ function getInputInfo() {
     document.getElementById('add-author').value = ""
     document.getElementById('add-pages').value = ""
     document.getElementById('add-pages-read').value = ""
-    
+
+}
+
+function Verify() {
+    title = document.getElementById('add-title').value
+    myLibrary.some(function(currenttitle) {
+            if( title == currenttitle.title) {
+                alert("book already exist")
+            } else {
+                alert('book made')
+            }
+        })
 }
 
 
-function bookTemplate( title, author, pages, pagesRead) {
+function bookTemplate( title, author, totPages, pagesRead) {
     
     const addNewBookBtn = document.querySelector('.add-button')
 
@@ -107,14 +122,14 @@ function bookTemplate( title, author, pages, pagesRead) {
      const bookCounter = document.createElement('div');
      bookCounter.classList.add('book-counter');
 
-     let totalPages = document.createElement('h2');
-     totalPages.classList.add('completed');
+     const pagesCompleted = document.createElement('h2');
+     pagesCompleted.classList.add('completed');
 
      const seperator = document.createElement('div');
      seperator.classList.add('line');
 
-     let pagesCompleted = document.createElement('h2');
-     pagesCompleted.classList.add('total');
+     const totalPages = document.createElement('h2');
+     totalPages.classList.add('total');
 
     grid.appendChild(bookContainer)
     bookContainer.appendChild(buttonOptions)
@@ -136,7 +151,7 @@ function bookTemplate( title, author, pages, pagesRead) {
     bookTitle.textContent = title;
     bookAuthor.textContent = author;
     pagesCompleted.textContent = pagesRead
-    totalPages.textContent= pages
+    totalPages.textContent= totPages
 
     grid.insertBefore(bookContainer, addNewBookBtn)
 
@@ -157,7 +172,7 @@ function bookTemplate( title, author, pages, pagesRead) {
     }
 
     function addPagesNum() {
-        if(pagesCompleted.innerText < totalPages.innerText){
+        if(parseInt(pagesCompleted.innerText) < parseInt(totalPages.innerText)){
             pagesCompleted.innerText++
         }
     }
@@ -166,7 +181,17 @@ function bookTemplate( title, author, pages, pagesRead) {
         pagesCompleted.innerText = totalPages.innerText
     }
 
-    buttonRemove.addEventListener('click', warningmessage)
+    // buttonRemove.addEventListener('click', warningmessage)
+    buttonRemove.addEventListener('click', deleteBook)
+
+    function deleteBook() {
+        grid.removeChild(bookContainer)
+        const index = myLibrary.findIndex(Book => Book.title === bookTitle.innerText)
+        myLibrary.splice(index, 1)
+    }
+
+    myLibrary.push(new Book(title, author, totPages, pagesread))
+
 
 }
 
@@ -193,3 +218,20 @@ function addPagesNum() {
 function completedPages() {
     document.querySelector('.completed').innerText = document.querySelector('.total').innerText
 }
+
+
+// myLibrary.findIndex(Book => Book.title === "3")
+// myLibrary.find(book => book.title === 'j')
+
+// const exist = myLibrary.some(function(currenttitle) {
+//     if( title == currenttitle.title) {
+//         alert("book already exist")
+//     } else {
+//         bookTemplate(title, author, totalPages, pagesread);
+//         document.getElementById('add-title').value = ""
+//         document.getElementById('add-author').value = ""
+//         document.getElementById('add-pages').value = ""
+//         document.getElementById('add-pages-read').value = "" 
+//     }
+// })
+// exist
