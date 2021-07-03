@@ -1,5 +1,6 @@
 let myLibrary = []
 let bookId = -1
+let completed = false
 
 function Book(title, author, pages, read) {
     bookId++
@@ -7,6 +8,7 @@ function Book(title, author, pages, read) {
     this.author = author
     this.pages = pages
     this.read = read
+    this.completed = completed
     this.id = bookId
 
 }
@@ -31,6 +33,8 @@ addBookConfirm.addEventListener('click', getInputInfo)
 
 function addBookToLibrary() {
     modalAdd.classList.remove("display-none")
+    totalPages = document.getElementById('add-pages').value
+    pagesread = document.getElementById('add-pages-read').value
 }
 
 function cancelAddToLibrary(){
@@ -39,6 +43,7 @@ function cancelAddToLibrary(){
     document.getElementById('add-author').value = ""
     document.getElementById('add-pages').value = ""
     document.getElementById('add-pages-read').value = ""
+    document.getElementById('book-completed').checked = false
 }
 
 function warningmessage() {
@@ -64,20 +69,10 @@ function getInputInfo() {
     document.getElementById('add-author').value = ""
     document.getElementById('add-pages').value = ""
     document.getElementById('add-pages-read').value = ""
-
+    document.getElementById('book-completed').checked = false
+    
+    updateInfoDisplay()
 }
-
-function Verify() {
-    title = document.getElementById('add-title').value
-    myLibrary.some(function(currenttitle) {
-            if( title == currenttitle.title) {
-                alert("book already exist")
-            } else {
-                alert('book made')
-            }
-        })
-}
-
 
 function bookTemplate( title, author, totPages, pagesRead) {
     
@@ -166,19 +161,28 @@ function bookTemplate( title, author, totPages, pagesRead) {
     buttonCheck.addEventListener('click', completedPages)
 
     function subtractPagesNum() {
+        const index = myLibrary.findIndex(Book => Book.title === bookTitle.innerText)
         if(pagesCompleted.innerText > 0){
             pagesCompleted.innerText--
+            myLibrary[index].read--
+            updateInternalinfo()
         }
     }
 
     function addPagesNum() {
+        const index = myLibrary.findIndex(Book => Book.title === bookTitle.innerText)
         if(parseInt(pagesCompleted.innerText) < parseInt(totalPages.innerText)){
             pagesCompleted.innerText++
+            myLibrary[index].read++
+            updateInternalinfo()
         }
     }
     
     function completedPages() {
         pagesCompleted.innerText = totalPages.innerText
+        const index = myLibrary.findIndex(Book => Book.title === bookTitle.innerText)
+        myLibrary[index].read = myLibrary[index].pages
+        updateInternalinfo()
     }
 
     // buttonRemove.addEventListener('click', warningmessage)
@@ -186,10 +190,20 @@ function bookTemplate( title, author, totPages, pagesRead) {
 
     function deleteBook() {
         grid.removeChild(bookContainer)
-        const index = myLibrary.findIndex(Book => Book.title === bookTitle.innerText)
         myLibrary.splice(index, 1)
+        updateInfoDisplay()
     }
 
+    function updateInternalinfo(){
+        const index = myLibrary.findIndex(Book => Book.title === bookTitle.innerText)
+        if(myLibrary[index].pages == myLibrary[index].read) {
+            myLibrary[index].completed = true
+        } else {
+            myLibrary[index].completed = false
+        }
+        updateInfoDisplay()
+    }
+    
     myLibrary.push(new Book(title, author, totPages, pagesread))
 
 
@@ -220,18 +234,31 @@ function completedPages() {
 }
 
 
-// myLibrary.findIndex(Book => Book.title === "3")
-// myLibrary.find(book => book.title === 'j')
+// const Totalpages = myLibrary.reduce((total, book) =>{
+//     return total +(book.pages);
+// },0)
 
-// const exist = myLibrary.some(function(currenttitle) {
-//     if( title == currenttitle.title) {
-//         alert("book already exist")
-//     } else {
-//         bookTemplate(title, author, totalPages, pagesread);
-//         document.getElementById('add-title').value = ""
-//         document.getElementById('add-author').value = ""
-//         document.getElementById('add-pages').value = ""
-//         document.getElementById('add-pages-read').value = "" 
-//     }
-// })
-// exist
+
+let totalBooksDisplay = document.querySelector('.books-display')
+let totalPagesDisplay = document.querySelector('.pages-display')
+let completedBooksDisplay = document.querySelector('.completed-display')
+
+function updateInfoDisplay() {
+    totalBooksDisplay.innerText = myLibrary.length
+
+    const totalYears = myLibrary.reduce((total, book) => {
+        return total + (parseInt(book.pages));
+    }, 0);
+
+    totalPagesDisplay.innerText = totalYears
+
+    myLibrary.forEach((book) =>{
+        let count = 0
+        if(book.completed == true) {
+            count++
+            
+        }
+        completedBooksDisplay.innerText = count
+    })
+
+}
