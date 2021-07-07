@@ -2,16 +2,28 @@ let myLibrary = []
 let bookId = -1
 let completed = false
 
-function Book(title, author, pages, read) {
-    bookId++
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.completed = completed
-    this.id = bookId
-
+class Book {
+    constructor(title, author, pages, read) {
+        bookId++
+        this.title = title
+        this. author = author
+        this.pages = pages
+        this.read = read
+        this.completed = completed
+        this.id = bookId
+    }
 }
+
+// function Book(title, author, pages, read) {
+//     bookId++
+//     this.title = title
+//     this.author = author
+//     this.pages = pages
+//     this.read = read
+//     this.completed = completed
+//     this.id = bookId
+
+// }
 
 const grid = document.getElementById('BC')
 
